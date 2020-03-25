@@ -233,6 +233,18 @@
     <Compile Include="Migrations\202003251638145_PopulateProductsTable.Designer.cs">
       <DependentUpon>202003251638145_PopulateProductsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003252250429_populateAddUser.cs" />
+    <Compile Include="Migrations\202003252250429_populateAddUser.Designer.cs">
+      <DependentUpon>202003252250429_populateAddUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003252254262_populateAddRoles.cs" />
+    <Compile Include="Migrations\202003252254262_populateAddRoles.Designer.cs">
+      <DependentUpon>202003252254262_populateAddRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003252256173_populateAddUserRoles.cs" />
+    <Compile Include="Migrations\202003252256173_populateAddUserRoles.Designer.cs">
+      <DependentUpon>202003252256173_populateAddUserRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -286,7 +298,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -342,6 +356,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003251638145_PopulateProductsTable.resx">
       <DependentUpon>202003251638145_PopulateProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003252250429_populateAddUser.resx">
+      <DependentUpon>202003252250429_populateAddUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003252254262_populateAddRoles.resx">
+      <DependentUpon>202003252254262_populateAddRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003252256173_populateAddUserRoles.resx">
+      <DependentUpon>202003252256173_populateAddUserRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
