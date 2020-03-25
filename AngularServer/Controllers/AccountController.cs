@@ -318,6 +318,16 @@ namespace AngularServer.Controllers
             return logins;
         }
 
+        //Create Roles
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> CreateRoles()
+        {
+            RoleManager<IdentityRole> rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            IdentityRole ir = new IdentityRole("User");
+            await rm.CreateAsync(ir);
+            return Ok();
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -331,6 +341,7 @@ namespace AngularServer.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            await UserManager.AddToRoleAsync(user.Id, "User");
 
             if (!result.Succeeded)
             {
