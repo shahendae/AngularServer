@@ -245,6 +245,14 @@
     <Compile Include="Migrations\202003252256173_populateAddUserRoles.Designer.cs">
       <DependentUpon>202003252256173_populateAddUserRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003281702453_changeActionToString.cs" />
+    <Compile Include="Migrations\202003281702453_changeActionToString.Designer.cs">
+      <DependentUpon>202003281702453_changeActionToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003291737443_changeDateInOrderTable.cs" />
+    <Compile Include="Migrations\202003291737443_changeDateInOrderTable.Designer.cs">
+      <DependentUpon>202003291737443_changeDateInOrderTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -365,6 +373,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003252256173_populateAddUserRoles.resx">
       <DependentUpon>202003252256173_populateAddUserRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281702453_changeActionToString.resx">
+      <DependentUpon>202003281702453_changeActionToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003291737443_changeDateInOrderTable.resx">
+      <DependentUpon>202003291737443_changeDateInOrderTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

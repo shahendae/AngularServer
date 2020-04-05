@@ -22,10 +22,12 @@ namespace AngularServer.Controllers
             return db.Orders;
         }
 
-        // GET: api/Orders/5
+        // GET: api/Orders/5      
+ 
         [ResponseType(typeof(Order))]
-        public IHttpActionResult GetOrder(int id)
+        public IHttpActionResult GetOrder(string id)
         {
+
             Order order = db.Orders.Find(id);
             if (order == null)
             {
@@ -34,6 +36,19 @@ namespace AngularServer.Controllers
 
             return Ok(order);
         }
+
+
+        // api for orders of user in specific period of time 
+        // GET: api/Orders/{ApplicationUserId , Date to , Date from}
+        [Route("api/Order/{id}/{from}/{to}")] // /{id}
+        [ResponseType(typeof(Order))]
+        public IQueryable<Order> GetOrder(string id, DateTime from, DateTime to)
+        {
+            var order = db.Orders.Where(a => a.ApplicationUserId == id && a.Date >= from && a.Date <= to);
+            return order;
+        }
+
+
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
