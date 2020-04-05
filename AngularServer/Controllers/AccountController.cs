@@ -20,6 +20,7 @@ using AngularServer.Results;
 namespace AngularServer.Controllers
 {
     [Authorize]
+    
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -258,13 +259,14 @@ namespace AngularServer.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                var userRoles =UserManager.GetRoles(user.Id)[0];
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName, user.Id,userRoles);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else

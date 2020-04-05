@@ -12,6 +12,7 @@ using AngularServer.Models;
 
 namespace AngularServer.Controllers
 {
+    [Authorize]
     public class CategoriesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

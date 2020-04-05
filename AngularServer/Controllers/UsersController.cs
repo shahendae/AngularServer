@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 
 namespace AngularServer.Controllers
 {
+    [Authorize]
     public class UsersController : ApiController
     {
         UserManager<ApplicationUser> userManager;
@@ -19,15 +20,14 @@ namespace AngularServer.Controllers
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         }
-        // GET: api/User
+        // GET: api/Users
         public IQueryable<object> Get()
         {
             var user = userManager.Users.Select(u => new { Id = u.Id, Email = u.Email, UserName = u.UserName });
-            //var users = db.Users.Select(u => new { Id = u.Id, Email = u.Email, UserName = u.UserName, Name = u.Name });
             return user;
         }
 
-        // GET: api/User/5
+        // GET: api/Users/5
         [ResponseType(typeof(ApplicationUser))]
         public IHttpActionResult Get(string id)
         {
@@ -40,7 +40,7 @@ namespace AngularServer.Controllers
             return Ok(applicationUser);
         }
 
-        // POST: api/User
+        // POST: api/Users
         [ResponseType(typeof(ApplicationUser))]
         public async Task<IHttpActionResult> Post(RegisterBindingModel applicationUser)
         {
@@ -51,12 +51,12 @@ namespace AngularServer.Controllers
 
             var user = new ApplicationUser { UserName = applicationUser.Email, Email = applicationUser.Email };
             await userManager.CreateAsync(user, applicationUser.Password);
+            await userManager.AddToRoleAsync(user.Id, "User");
 
             return Ok();
-            //return CreatedAtRoute("DefaultApi", new { id = applicationUser.Id }, applicationUser);
         }
 
-        // PUT: api/User/5
+        // PUT: api/Users/5
         [ResponseType(typeof(void))]
         public IHttpActionResult Put(string id, ApplicationUser user)
         {
@@ -78,7 +78,7 @@ namespace AngularServer.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Users/5
         [ResponseType(typeof(ApplicationUser))]
         public IHttpActionResult Delete(string id)
         {

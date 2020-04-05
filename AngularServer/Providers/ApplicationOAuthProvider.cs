@@ -29,9 +29,16 @@ namespace AngularServer.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            //var allow = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            //if (allow == null)
+            //{
+            //    allow = "*";
+            //}
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
-
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            RoleManager<IdentityRole> rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var userRoles =userManager.GetRoles(user.Id)[0];
 
             if (user == null)
             {
@@ -44,7 +51,7 @@ namespace AngularServer.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateProperties(user.UserName, user.Id,userRoles);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -86,11 +93,13 @@ namespace AngularServer.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userName, string id,string role)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                {"id", id },
+                {"Role", role }
             };
             return new AuthenticationProperties(data);
         }
