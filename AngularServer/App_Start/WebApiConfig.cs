@@ -38,9 +38,8 @@ namespace AngularServer
             var jsonFormatter = config.Formatters.JsonFormatter;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.Remove(config.Formatters.XmlFormatter);
-            jsonFormatter.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-
+            jsonFormatter.SerializerSettings.DateFormatString = "MM/dd/yyyy";
+           //jsonFormatter.SerializerSettings.DateTimeZoneHandling = null;
         }
     }
 }
