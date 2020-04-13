@@ -39,7 +39,6 @@ namespace AngularServer
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             jsonFormatter.SerializerSettings.DateFormatString = "MM/dd/yyyy";
-           //jsonFormatter.SerializerSettings.DateTimeZoneHandling = null;
         }
     }
 }

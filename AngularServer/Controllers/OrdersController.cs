@@ -25,7 +25,7 @@ namespace AngularServer.Controllers
         // GET: api/Orders/5      
  
         [ResponseType(typeof(Order))]
-        public IHttpActionResult GetOrder(string id)
+        public IHttpActionResult GetOrder(int id)
         {
 
             Order order = db.Orders.Find(id);
@@ -52,20 +52,11 @@ namespace AngularServer.Controllers
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, Order order)
+        public IHttpActionResult PutOrder(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
-
+            var order = db.Orders.First(o => o.Id == id);
+            order.Action = "Done";
             db.Entry(order).State = EntityState.Modified;
-
             try
             {
                 db.SaveChanges();
@@ -81,7 +72,6 @@ namespace AngularServer.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -128,6 +118,26 @@ namespace AngularServer.Controllers
         private bool OrderExists(int id)
         {
             return db.Orders.Count(e => e.Id == id) > 0;
+        }
+
+        [Route("api/Order/products")] // /{id}
+        [ResponseType(typeof(Order))]
+        public IQueryable GetOrderProuducts()
+        {
+            var today = DateTime.Now.Date;
+            var orders = db.Orders
+                        .Where(o => o.Date == today && o.Action == "Waiting")
+                        .Select(order => new
+                        {
+                            order.Id,
+                            order.ApplicationUser.UserName,
+                            order.Date,
+                            order.Notes,
+                            order.Action,
+                            order.TotalAmount,
+                            products = order.Products.Select(p=>new { p.ProductName })
+                        });
+            return orders;
         }
     }
 }
